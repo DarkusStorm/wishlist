@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ titulo }}</title>
+</head>
+<body>
+    <h1 id="titulo_pagina">{{ titulo }}</h1>
+    <form method="POST">
+        <label for="titulo-obra" class="form-label">Título da Obra:</label>
+        <input type="text" class="form-control" name="titulo-obra" id="titulo-obra" aria-describedby="ajudaNomeObra" value="{{ obra_selecionada.titulo_obra if obra_selecionada else '' }}" required>
+        <div id="ajudaNomeObra" class="form-text">Use um nome que diferencie se você deseja consumir apenas uma obra específica de uma franquia.</div>
+
+        <label for="indicacao_obra" class="form-label">Indicado por:</label>
+        <input type="text" class="form-control" name="indicacao-obra" id="indicacao-obra" required>
+        <br>
+        <label for="tipo-obra" class="form-label">Informe o tipo de mídia:</label>
+        <select name="tipo-obra" id="tipo-obra" required>
+            <option value="filme">Filme</option>
+            <option value="serie">Série</option>
+            <option value="musica">Música</option>
+            <option value="livro">Livro</option>
+            <option value="jogo">Jogo</option>
+        </select>
+
+        <button type="submit" class="btn btn primary">Salvar</button>
+        <div id="lista_obras">
+            <h2>Lista de Obras</h2>
+
+            {% if obras %}
+
+                {% for obra in obras %}
+                    
+                    {% if tipo == filme %}
+
+                        <ul id="filmes"><h3>Filmes:</h3>
+                            <li><a href="{{url_for('update', idObra=obra.id_obra)}}">📝 Editar</a> — {{ obra.titulo_obra }} - Indicado por: {{ obra.indicacao_obra }} — <a href="{{ url_for('delete', idObra=obra.id_obra) }}">Apagar 🗑️</a></li>
+                        </ul>
+                    
+                    {% elif tipo == serie %}
+
+                        <ul id="series"><h3>Séries:</h3>
+                            <li><a href="{{url_for('update', idObra=obra.id_obra)}}">📝 Editar</a> — {{ obra.titulo_obra }} - Indicado por: {{ obra.indicacao_obra }} — <a href="{{ url_for('delete', idObra=obra.id_obra) }}">Apagar 🗑️</a></li>
+                        </ul>
+
+                    {% elif tipo == musica %}
+
+                        <ul id="musicas"><h3>Músicas:</h3>
+                            <li><a href="{{url_for('update', idObra=obra.id_obra)}}">📝 Editar</a> — {{ obra.titulo_obra }} - Indicado por: {{ obra.indicacao_obra }} — <a href="{{ url_for('delete', idObra=obra.id_obra) }}">Apagar 🗑️</a></li>
+                        </ul>
+
+                    {% elif tipo == livro %}
+
+                        <ul id="livros"><h3>Livros:</h3>
+                            <li><a href="{{url_for('update', idObra=obra.id_obra)}}">📝 Editar</a> — {{ obra.titulo_obra }} - Indicado por: {{ obra.indicacao_obra }} — <a href="{{ url_for('delete', idObra=obra.id_obra) }}">Apagar 🗑️</a></li>
+                        </ul>
+
+                    {% else %}
+
+                        <ul id="jogos"><h3>Jogos:</h3>
+                            <li><a href="{{url_for('update', idObra=obra.id_obra)}}">📝 Editar</a> — {{ obra.titulo_obra }} - Indicado por: {{ obra.indicacao_obra }} — <a href="{{ url_for('delete', idObra=obra.id_obra) }}">Apagar 🗑️</a></li>
+                        </ul>
+                    
+                    {% endif %}
+
+                {% endfor %}
+            
+            {% else %}
+                
+                <p>Nenhuma obra a consumir cadastrada.</p>
+            
+            {% endif %}
+        </div>
+    </form>
+</body>
+</html>
+
+<!-- Comentários para não se esquecer abaixo:
+ 
+    Métodos HTTP:
+    POST - "posta" (cadastra/envia) as informações (CREATE);
+    GET - "pega" (recupera/obtém) as informações (READ);
+    UPDATE/PATCH - "atualizam" as informações ou parte delas (UPDATE);
+    DELETE - "apaga" as informações (DELETE);
+    — C.R.U.D. (Create, Read, Update, Delete) —
+
+        — Outros:
+            PUT;
+            HEAD;
+            PATCH;
+            CONNECT;
+            TRACE;
+            OPTIONS.
+
+    Códigos de Retorno:
+    2XX - Sucesso;
+    3XX - Sucesso, mas redirecionado;
+    4XX - Não encontrado (falha na REQUISIÇÃO);
+    5XX - Erro do servidor (falha na RESPOSTA)
+-->

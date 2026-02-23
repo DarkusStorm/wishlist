@@ -1,0 +1,81 @@
+:root {
+    --cor-fundo: #09032e;
+    --cor-secundaria: #012d66;
+    --cor-primaria-titulo: #ffffff;
+    --cor-secundaria-titulo: #2db544;
+    --cor-primaria-texto: #e7e6e6;
+    --cor-secundaria-texto: #000;
+    --cor-link: #85faf1;
+    --cor-bordas: #eee;
+}
+
+body {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background-color: var(--cor-fundo);
+    color: var(--cor-primaria-texto);
+}
+
+h1 {
+    font-size: 2em;
+    font-weight: 700;
+    border-radius: 0.2em;
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1em;
+}
+
+p {
+    text-align: center;
+}
+
+body h1{
+    background-color: var(--cor-primaria);
+    color: var(--cor-primaria-titulo);
+    margin: auto;
+    text-align: center;
+}
+
+a {
+    color: var(--cor-link);
+}
+
+a:hover{
+    text-decoration: underline;  
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 700px;
+    margin: auto;
+}
+
+input,
+textarea, select {
+    border: 1px solid #000;
+    border-radius: 6px;
+    padding: .25rem .75rem;
+    resize: none;
+    color: var(--cor-secundaria-texto);
+    background-color: #fff;
+}
+
+button[type="submit"] {
+    background-color: var(--cor-bordas);
+    color: var(--cor-secundaria-texto);
+    border-radius: 0.5em;
+}
+
+button:hover{
+    background-color: #d1d1d1;
+}

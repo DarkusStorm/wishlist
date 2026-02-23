@@ -69,7 +69,6 @@ textarea {
   background: none;
   border: none;
   outline: none; /* Substituído por foco visível abaixo */
-  appearance: none;
 }
 
 /* 10. Estilo de foco acessível (para navegação por teclado) */

@@ -38,6 +38,16 @@ class Obra:
             return obras
             # GET;
     
+    @classmethod
+    def obter_obras_agrupadas(cls) -> dict:
+        obras = cls.obter_obras()
+        grupos = {}
+
+        for obra in obras:
+            grupos.setdefault(obra.tipo_obra, []).append(obra)
+
+        return grupos
+    
     def atualizar_obra(self) -> Cursor:
         with Database() as db:
             query: str = ('UPDATE obras SET titulo_obra = ?, indicacao_obra = ?, tipo_obra = ? WHERE id = ?;')

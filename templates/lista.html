@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ titulo }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='reset.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <h1 id="titulo_pagina">{{ titulo }}</h1>
@@ -14,7 +16,7 @@
 
         <label for="indicacao_obra" class="form-label">Indicado por:</label>
         <input type="text" class="form-control" name="indicacao-obra" id="indicacao-obra">
-        <br>
+        
         <label for="tipo-obra" class="form-label">Informe o tipo de mídia:</label>
         <select name="tipo-obra" id="tipo-obra" required>
             <option value="filme">Filme</option>
@@ -28,13 +30,53 @@
         <div id="lista_obras">
             <h2>Lista de Obras</h2>
 
+            {% if obras_por_tipo %}
+
+                {% set titulos = {
+                    'filme': '🎞️ — Filmes:',
+                    'serie': '🎬 — Séries:',
+                    'musica': '🎼 — Músicas:',
+                    'livro': '📚 — Livros:',
+                    'jogo': '🕹️ — Jogos:'
+                } %}
+
+                {% for tipo, lista in obras_por_tipo.items() %}
+        
+                    {% if lista %}
+                        <h3>{{ titulos[tipo] }}</h3>
+                        <ul id="{{ tipo }}">
+                            
+                            {% for obra in lista %}
+                                <li>
+                                    <a href="{{ url_for('update', idObra=obra.id_obra) }}">📝 Editar</a>
+                                    — {{ obra.titulo_obra }}
+
+                                    {% if obra.indicacao_obra %}
+                                        - Indicado por: {{ obra.indicacao_obra }}
+                                    {% endif %}
+
+                                    — <a href="{{ url_for('delete', idObra=obra.id_obra) }}">Apagar 🗑️</a>
+                                </li>
+                                <br>
+                            {% endfor %}
+
+                        </ul>
+                    {% endif %}
+
+                {% endfor %}
+
+            {% else %}
+                <p>Nenhuma obra a consumir cadastrada.</p>
+            {% endif %}
+
+<!-- Código descartado de "Lista de Obras"
             {% if obras %}
 
                 {% for obra in obras %}
                     
-                    {% if tipo == filme %}
+                    {% if obra.tipo_obra == filme %}
 
-                        <ul id="filmes"><h3>Filmes:</h3>
+                        <ul id="filmes"><h3>🎞️ — Filmes:</h3>
                             <li><a href="{{url_for('update', idObra=obra.id_obra)}}">📝 Editar</a> — {{ obra.titulo_obra }}
                                 
                                 {% if obra.indicacao_obra %}
@@ -48,28 +90,68 @@
                                 {% endif %}
                         </ul>
                     
-                    {% elif tipo == serie %}
+                    {% elif obra.tipo_obra == serie %}
 
-                        <ul id="series"><h3>Séries:</h3>
-                            <li><a href="{{url_for('update', idObra=obra.id_obra)}}">📝 Editar</a> — {{ obra.titulo_obra }} - Indicado por: {{ obra.indicacao_obra }} — <a href="{{ url_for('delete', idObra=obra.id_obra) }}">Apagar 🗑️</a></li>
+                        <ul id="series"><h3>🎬 — Séries:</h3>
+                            <li><a href="{{url_for('update', idObra=obra.id_obra)}}">📝 Editar</a> — {{ obra.titulo_obra }}
+                                
+                                {% if obra.indicacao_obra %}
+                                
+                                    - Indicado por: {{ obra.indicacao_obra }} — <a href="{{ url_for('delete', idObra=obra.id_obra) }}">Apagar 🗑️</a></li>
+                        
+                                {% else %}
+
+                                    — <a href="{{ url_for('delete', idObra=obra.id_obra) }}">Apagar 🗑️</a></li>
+                                
+                                {% endif %}
                         </ul>
 
-                    {% elif tipo == musica %}
+                    {% elif obra.tipo_obra == musica %}
 
-                        <ul id="musicas"><h3>Músicas:</h3>
-                            <li><a href="{{url_for('update', idObra=obra.id_obra)}}">📝 Editar</a> — {{ obra.titulo_obra }} - Indicado por: {{ obra.indicacao_obra }} — <a href="{{ url_for('delete', idObra=obra.id_obra) }}">Apagar 🗑️</a></li>
+                        <ul id="musicas"><h3>🎼 — Músicas:</h3>
+                            <li><a href="{{url_for('update', idObra=obra.id_obra)}}">📝 Editar</a> — {{ obra.titulo_obra }}
+                                
+                                {% if obra.indicacao_obra %}
+                                
+                                    - Indicado por: {{ obra.indicacao_obra }} — <a href="{{ url_for('delete', idObra=obra.id_obra) }}">Apagar 🗑️</a></li>
+                        
+                                {% else %}
+
+                                    — <a href="{{ url_for('delete', idObra=obra.id_obra) }}">Apagar 🗑️</a></li>
+                                
+                                {% endif %}
                         </ul>
 
-                    {% elif tipo == livro %}
+                    {% elif obra.tipo_obra == livro %}
 
-                        <ul id="livros"><h3>Livros:</h3>
-                            <li><a href="{{url_for('update', idObra=obra.id_obra)}}">📝 Editar</a> — {{ obra.titulo_obra }} - Indicado por: {{ obra.indicacao_obra }} — <a href="{{ url_for('delete', idObra=obra.id_obra) }}">Apagar 🗑️</a></li>
+                        <ul id="livros"><h3>📚 — Livros:</h3>
+                            <li><a href="{{url_for('update', idObra=obra.id_obra)}}">📝 Editar</a> — {{ obra.titulo_obra }}
+
+                                {% if obra.indicacao_obra %}
+                                
+                                    - Indicado por: {{ obra.indicacao_obra }} — <a href="{{ url_for('delete', idObra=obra.id_obra) }}">Apagar 🗑️</a></li>
+                        
+                                {% else %}
+
+                                    — <a href="{{ url_for('delete', idObra=obra.id_obra) }}">Apagar 🗑️</a></li>
+                                
+                                {% endif %}
                         </ul>
 
                     {% else %}
 
-                        <ul id="jogos"><h3>Jogos:</h3>
-                            <li><a href="{{url_for('update', idObra=obra.id_obra)}}">📝 Editar</a> — {{ obra.titulo_obra }} - Indicado por: {{ obra.indicacao_obra }} — <a href="{{ url_for('delete', idObra=obra.id_obra) }}">Apagar 🗑️</a></li>
+                        <ul id="jogos"><h3>🕹️ — Jogos:</h3>
+                            <li><a href="{{url_for('update', idObra=obra.id_obra)}}">📝 Editar</a> — {{ obra.titulo_obra }}
+
+                                {% if obra.indicacao_obra %}
+                                
+                                    - Indicado por: {{ obra.indicacao_obra }} — <a href="{{ url_for('delete', idObra=obra.id_obra) }}">Apagar 🗑️</a></li>
+                        
+                                {% else %}
+
+                                    — <a href="{{ url_for('delete', idObra=obra.id_obra) }}">Apagar 🗑️</a></li>
+                                
+                                {% endif %}
                         </ul>
                     
                     {% endif %}
@@ -81,31 +163,4 @@
                 <p>Nenhuma obra a consumir cadastrada.</p>
             
             {% endif %}
-        </div>
-    </form>
-</body>
-</html>
-
-<!-- Comentários para não se esquecer abaixo:
- 
-    Métodos HTTP:
-    POST - "posta" (cadastra/envia) as informações (CREATE);
-    GET - "pega" (recupera/obtém) as informações (READ);
-    UPDATE/PATCH - "atualizam" as informações ou parte delas (UPDATE);
-    DELETE - "apaga" as informações (DELETE);
-    — C.R.U.D. (Create, Read, Update, Delete) —
-
-        — Outros:
-            PUT;
-            HEAD;
-            PATCH;
-            CONNECT;
-            TRACE;
-            OPTIONS.
-
-    Códigos de Retorno:
-    2XX - Sucesso;
-    3XX - Sucesso, mas redirecionado;
-    4XX - Não encontrado (falha na REQUISIÇÃO);
-    5XX - Erro do servidor (falha na RESPOSTA)
 -->

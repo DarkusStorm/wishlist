@@ -13,7 +13,7 @@
         <div id="ajudaNomeObra" class="form-text">Use um nome que diferencie se você deseja consumir apenas uma obra específica de uma franquia.</div>
 
         <label for="indicacao_obra" class="form-label">Indicado por:</label>
-        <input type="text" class="form-control" name="indicacao-obra" id="indicacao-obra" required>
+        <input type="text" class="form-control" name="indicacao-obra" id="indicacao-obra">
         <br>
         <label for="tipo-obra" class="form-label">Informe o tipo de mídia:</label>
         <select name="tipo-obra" id="tipo-obra" required>
@@ -35,7 +35,17 @@
                     {% if tipo == filme %}
 
                         <ul id="filmes"><h3>Filmes:</h3>
-                            <li><a href="{{url_for('update', idObra=obra.id_obra)}}">📝 Editar</a> — {{ obra.titulo_obra }} - Indicado por: {{ obra.indicacao_obra }} — <a href="{{ url_for('delete', idObra=obra.id_obra) }}">Apagar 🗑️</a></li>
+                            <li><a href="{{url_for('update', idObra=obra.id_obra)}}">📝 Editar</a> — {{ obra.titulo_obra }}
+                                
+                                {% if obra.indicacao_obra %}
+                                
+                                    - Indicado por: {{ obra.indicacao_obra }} — <a href="{{ url_for('delete', idObra=obra.id_obra) }}">Apagar 🗑️</a></li>
+                        
+                                {% else %}
+
+                                    — <a href="{{ url_for('delete', idObra=obra.id_obra) }}">Apagar 🗑️</a></li>
+                                
+                                {% endif %}
                         </ul>
                     
                     {% elif tipo == serie %}

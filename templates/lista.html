@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1 id="titulo_pagina">{{ titulo }}</h1>
+    <header>
+        <h1 id="titulo_pagina">{{ titulo }}</h1>
+    </header>
     <form method="POST">
         <label for="titulo-obra" class="form-label">Título da Obra:</label>
         <input type="text" class="form-control" name="titulo-obra" id="titulo-obra" aria-describedby="ajudaNomeObra" value="{{ obra_selecionada.titulo_obra if obra_selecionada else '' }}" required>

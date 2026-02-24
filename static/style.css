@@ -1,11 +1,12 @@
 :root {
     --cor-fundo: #09032e;
+    --cor-primaria: rgb(0, 0, 145);
     --cor-secundaria: #012d66;
     --cor-primaria-titulo: #ffffff;
     --cor-secundaria-titulo: #2db544;
     --cor-primaria-texto: #e7e6e6;
     --cor-secundaria-texto: #000;
-    --cor-link: #85faf1;
+    --cor-link: #06e0ce;
     --cor-bordas: #eee;
 }
 
@@ -19,18 +20,22 @@ h1 {
     font-size: 2em;
     font-weight: 700;
     border-radius: 0.2em;
+    background-color: var(--cor-primaria);
 }
 
 h2 {
     font-size: 1.5rem;
     font-weight: 700;
     text-align: center;
+    margin-bottom: 1.5em;
 }
 
 h3 {
     font-size: 1.2rem;
     font-weight: 700;
     margin-bottom: 1em;
+    background-color: #8e01ca;
+    border-radius: 0.3em;
 }
 
 p {
@@ -78,6 +83,7 @@ button[type="submit"] {
     background-color: var(--cor-bordas);
     color: var(--cor-secundaria-texto);
     border-radius: 0.5em;
+    margin-bottom: 1em;
 }
 
 button:hover{
